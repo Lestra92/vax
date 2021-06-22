@@ -1,0 +1,71 @@
+version: "3.9"
+services:
+  zookeeper:
+    image: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    networks:
+      new_network:
+        ipv4_address: 10.5.0.50
+  kafka:
+    image: confluentinc/cp-kafka
+    ports:
+      - "9092:9092"
+    environment:
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
+    networks:
+      new_network:
+        ipv4_address: 10.5.0.55
+    depends_on:
+      - zookeeper
+  manufacturer:
+    image: vax
+    ports:
+      - "3001:3000"
+    environment:
+      - ACTOR=manufacturer
+      - KAFKA_BROKER=kafka:9092
+    networks:
+      new_network:
+        ipv4_address: 10.5.0.101
+    depends_on:
+      - kafka
+  authority:
+    image: vax
+    ports:
+      - "3002:3000"
+    environment:
+      - ACTOR=authority
+      - KAFKA_BROKER=kafka:9092
+      - KAFKA_CONNECTION_TIMEOUT=25
+    networks:
+      new_network:
+        ipv4_address: 10.5.0.102
+    depends_on:
+      - kafka
+      - manufacturer
+  customer:
+    image: vax
+    ports:
+      - "3003:3000"
+    environment:
+      - ACTOR=customer
+      - KAFKA_BROKER=kafka:9092
+      - KAFKA_CONNECTION_TIMEOUT=25
+    networks:
+      new_network:
+        ipv4_address: 10.5.0.103
+    depends_on:
+      - kafka
+      - manufacturer
+networks:
+  new_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+          gateway: 10.5.0.1

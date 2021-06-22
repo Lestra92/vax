@@ -1,0 +1,98 @@
+{
+	"info": {
+		"_postman_id": "6bf312fa-5b8e-42cd-9d5e-c07596e26c18",
+		"name": "vax",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create shipment",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vaccineName\": \"Test Vaccine\",\n    \"quantity\": 3333\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/api/v1/shipments",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"shipments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all manufacturer shipments",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3001/api/v1/shipments",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"shipments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all authority shipments",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3002/api/v1/shipments",
+					"host": [
+						"localhost"
+					],
+					"port": "3002",
+					"path": [
+						"api",
+						"v1",
+						"shipments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all customer shipments",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3003/api/v1/shipments",
+					"host": [
+						"localhost"
+					],
+					"port": "3003",
+					"path": [
+						"api",
+						"v1",
+						"shipments"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
